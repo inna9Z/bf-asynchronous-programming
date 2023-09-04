@@ -9,6 +9,7 @@ const { log, error } = labeledLogger();
 
 const getContactInfo = (user) => {
     // write me!
+  return  `${user.id}: ${user.email}, ${user.contactInfo}, ${user.site}`;
 };
 
 const handleError = (err) => error(err);
@@ -26,18 +27,19 @@ log('fetching and processing user 5');
 fetchUserById(5)
     .then(getContactInfo)
     // "5: Lucio_Hettinger@annie.ca, (254)954-1289, demarco.info"
-    .then(_)
-    .catch(_);
+    .then((user) => getContactInfo(user))
+    .catch((err) => err(err));
 
 log('fetching and processing user 7');
 fetchUserById(7)
-    ._(_)
+    .then((user) => getContactInfo(user))
     // "7: Telly.Hoeger@billy.biz, 210.067.6132, elvis.io"
-    ._(_)
-    ._(_);
+    .then((contactInfo) => log(contactInfo))
+    .catch((err) => err(err));
 
 log('fetching and processing user 12 (there are only 10 users!)');
 // 404
-__;
-
+fetchUserById(12)
+    .then(getContactInfo)
+    .catch(handleError);
 log('= = = =  the call stack is empty  = = = =');
